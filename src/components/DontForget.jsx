@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { BookmarkCheck, ChevronDown, ChevronUp, Clock } from "lucide-react"
+import { useState } from "react";
+import { BookmarkCheck, ChevronDown, ChevronUp, Clock } from "lucide-react";
 
 const DontForget = ({ dontForgetTasks, toggleDontForget }) => {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className="card p-4">
+    <div className="bg-white dark:bg-gray-800 rounded-md shadow border border-gray-200 dark:border-gray-700 p-4 text-gray-900 dark:text-gray-100">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold flex items-center">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="mr-2 focus:outline-none"
-            aria-label={isExpanded ? "Collapse section" : "Expand section"}
+            aria-label={isExpanded ? "Contraer sección" : "Expandir sección"}
           >
             {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </button>
           Don't Forget
-          <BookmarkCheck size={18} className="ml-2 text-[rgb(var(--color-primary))]" fill="currentColor" />
+          <BookmarkCheck size={18} className="ml-2 text-blue-500" fill="currentColor" />
         </h2>
       </div>
 
@@ -48,8 +48,8 @@ const DontForget = ({ dontForgetTasks, toggleDontForget }) => {
 
                 <button
                   onClick={() => toggleDontForget(task.id)}
-                  className="p-1 rounded-full text-[rgb(var(--color-primary))]"
-                  aria-label="Remove from don't forget"
+                  className="p-1 rounded-full text-blue-500"
+                  aria-label="Quitar recordatorio"
                 >
                   <BookmarkCheck size={18} fill="currentColor" />
                 </button>
@@ -59,8 +59,7 @@ const DontForget = ({ dontForgetTasks, toggleDontForget }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default DontForget
-
+export default DontForget;

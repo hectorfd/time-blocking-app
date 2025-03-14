@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Star, ChevronDown, ChevronUp, Clock } from "lucide-react"
+import { useState } from "react";
+import { Star, ChevronDown, ChevronUp, Clock } from "lucide-react";
 
 const TopPriorities = ({ priorityTasks, togglePriority }) => {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className="card p-4">
+    <div className="bg-white dark:bg-gray-800 rounded-md shadow border border-gray-200 dark:border-gray-700 p-4 text-gray-900 dark:text-gray-100">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold flex items-center">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="mr-2 focus:outline-none"
-            aria-label={isExpanded ? "Collapse section" : "Expand section"}
+            aria-label={isExpanded ? "Contraer sección" : "Expandir sección"}
           >
             {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </button>
@@ -49,7 +49,7 @@ const TopPriorities = ({ priorityTasks, togglePriority }) => {
                 <button
                   onClick={() => togglePriority(task.id)}
                   className="p-1 rounded-full text-yellow-500"
-                  aria-label="Remove from priorities"
+                  aria-label="Quitar de prioridades"
                 >
                   <Star size={18} fill="currentColor" />
                 </button>
@@ -59,8 +59,7 @@ const TopPriorities = ({ priorityTasks, togglePriority }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default TopPriorities
-
+export default TopPriorities;
