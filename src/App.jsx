@@ -109,11 +109,7 @@ function App() {
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-6">
-            <TodoList
-              projects={projects}
-              addProject={addProject}
-              deleteProject={deleteProject}
-            />
+            
             <DailyPlans
               tasks={tasks}
               projects={projects}
@@ -125,6 +121,11 @@ function App() {
             />
           </div>
           <div className="space-y-6">
+          <TodoList
+              projects={projects}
+              addProject={addProject}
+              deleteProject={deleteProject}
+            />
             <TopPriorities
               priorityTasks={priorityTasks}
               togglePriority={togglePriority}
