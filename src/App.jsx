@@ -104,7 +104,7 @@ function App() {
   const dontForgetTasks = tasks.filter((task) => task.dontForget);
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen bg-background text-foreground"> {/* Usar variables de tema */}
       <Header />
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
