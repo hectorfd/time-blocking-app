@@ -1,104 +1,106 @@
 @import "tailwindcss";
 
-/* Variables personalizadas */
-:root {
-  --color-primary: 99 102 241;
-  --color-secondary: 16 185 129;
-  --color-accent: 245 158 11;
-  --color-danger: 239 68 68;
-}
+/* Variables personalizadas de la aplicación (si son necesarias adicionalmente a index.css) */
+/* :root {
+  --color-app-primary: 99 102 241; // Ejemplo si se quiere mantener un color específico de marca
+  --color-app-secondary: 16 185 129;
+  --color-app-accent: 245 158 11;
+  --color-app-danger: 239 68 68;
+} */
 
-.dark {
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
-  color: rgb(249 250 251 / 1);
-}
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 47.4% 11.2%;
-    --radius: 0.5rem;
-  }
-
-  [data-theme="dark"] {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 210 40% 98%;
-  }
-}
+/* Las definiciones de :root y [data-theme="dark"] para variables como --background, --foreground, etc.
+   se han eliminado de aquí porque ya están (y deben ser gestionadas) en src/index.css.
+   La regla .dark genérica también se ha eliminado. */
 
 @layer base {
   body {
     font-family: "Inter", sans-serif;
+    background-color: hsl(var(--background)); /* Aplicar color de fondo base desde variables */
+    color: hsl(var(--foreground)); /* Aplicar color de texto base desde variables */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para el cambio de tema */
   }
 }
 
 @layer components {
-  .card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700;
+  /* Los estilos de .card, .btn, .input de aquí abajo usan @apply con clases de Tailwind
+     o variables CSS que ya deberían funcionar con el sistema de temas de index.css
+     o las utilidades dark: de Tailwind.
+     Revisaremos si necesitan ajustes o si las utilidades en index.css son suficientes.
+  */
+
+  /* Ejemplo de cómo un componente podría usar las variables de index.css directamente o mediante @apply */
+  .custom-card { /* Si .card de index.css no es suficiente */
+    @apply rounded-lg shadow-md border;
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border-color: hsl(var(--border));
+    padding: 1.5rem; /* p-6 */
   }
 
-  .btn {
+  /* Los botones .btn-primary, .btn-secondary, etc., pueden usar las variables --primary, --secondary de index.css */
+  .btn { /* Estilos base para botones si los de index.css no son suficientes */
     @apply inline-flex items-center justify-center rounded-md font-medium transition-colors;
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2; /* Usar --ring para el focus */
     @apply px-4 py-2;
   }
 
   .btn-primary {
-    @apply bg-[rgb(var(--color-primary))] text-white hover:bg-[rgb(var(--color-primary)/0.9)];
-    @apply focus-visible:ring-[rgb(var(--color-primary))];
+    @apply btn; /* Heredar estilos base de .btn */
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  .btn-primary:hover {
+    /* Tailwind normalmente maneja esto con dark:hover:bg-opacity-X o similar.
+       Si se usan HSL, el hover debe definirse explícitamente o ajustar la opacidad.
+       Para este ejemplo, usaré una ligera variación o dejaré que las clases de Tailwind lo manejen si es posible.
+       La definición en index.css para .btn-primary usa opacity: 0.9, lo cual es simple y funciona.
+    */
+    opacity: 0.9;
   }
 
+  /* Si se necesitan .btn-secondary, .btn-accent etc., definirlos de manera similar usando
+     --secondary, --accent de index.css */
   .btn-secondary {
-    @apply bg-[rgb(var(--color-secondary))] text-white hover:bg-[rgb(var(--color-secondary)/0.9)];
-    @apply focus-visible:ring-[rgb(var(--color-secondary))];
+    @apply btn;
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
   }
+  .btn-secondary:hover {
+    opacity: 0.9;
+  }
+
 
   .btn-icon {
-    @apply p-2;
+    @apply btn; /* Heredar estilos base */
+    @apply p-2; /* Sobrescribir padding si es necesario */
+    width: 2.5rem; /* Ajustar según necesidad */
+    height: 2.5rem; /* Ajustar según necesidad */
   }
 
   .input {
-    @apply w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md;
-    @apply focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-primary))] focus:border-transparent;
+    @apply w-full px-3 py-2 rounded-md border;
+    background-color: hsl(var(--input)); /* Usa la variable --input para el fondo */
+    color: hsl(var(--foreground)); /* Usa la variable --foreground para el texto */
+    border-color: hsl(var(--border)); /* Usa la variable --border para el borde */
   }
+  .input:focus {
+    @apply ring-2 ring-offset-0; /* Quitar ring-offset-2 si no hay fondo detrás que lo necesite */
+    border-color: hsl(var(--ring)); /* Cambia el color del borde al enfocar */
+    outline: none; /* Quitar el outline por defecto si se maneja con ring/border */
+    box-shadow: 0 0 0 2px hsl(var(--ring) / 0.5); /* O un box-shadow para el efecto de anillo */
+  }
+
 }
 
-
+/* Las utilidades definidas en @layer utilities en index.css (como .card, .input, .btn)
+   probablemente ya cubren muchos casos de uso.
+   Si se mantienen las de aquí, asegurarse que no haya conflicto o que sean intencionadamente
+   para sobrescribir o complementar.
+   Por ahora, he comentado la sección @layer utilities de styles.css porque index.css ya las tiene.
+   Si se decide que styles.css debe tener sus propias utilidades o componentes, se pueden descomentar
+   y ajustar.
+*/
+/*
 @layer utilities {
   .card {
     background-color: hsl(var(--card));
@@ -108,7 +110,7 @@
   }
 
   .input {
-    background-color: transparent;
+    background-color: transparent; // Esto podría ser diferente a hsl(var(--input))
     border: 1px solid hsl(var(--input));
     color: hsl(var(--foreground));
     border-radius: var(--radius);
@@ -144,4 +146,5 @@
     height: 2.5rem;
   }
 }
+*/
 

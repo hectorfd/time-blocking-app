@@ -13,30 +13,40 @@ const Header = () => {
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add("dark");
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.classList.add("dark"); // Para compatibilidad con Tailwind y estilos directos .dark
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.removeAttribute("data-theme");
+      document.documentElement.classList.remove("dark"); // Para compatibilidad con Tailwind y estilos directos .dark
     }
+    // Guardar la preferencia en localStorage
     localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
+  }, [darkMode]); // Se ejecuta cuando darkMode cambia y también al montar si darkMode se inicializa desde localStorage
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
 
+  // Determinar el color de los iconos basado en el tema, usando variables CSS si es posible,
+  // o manteniendo una lógica simple si las clases directas de Tailwind son más claras aquí.
+  // Las clases text-foreground o text-primary-foreground podrían ser opciones.
+  // Por ahora, text-gray-900 dark:text-gray-100 es bastante explícito y funciona bien.
+  // Si quisiéramos usar variables CSS: text-foreground o similar.
+  // const iconColorClass = darkMode ? "text-primary" : "text-primary"; // o text-foreground
+
   return (
-    <header className="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
+    <header className="bg-card border-b border-border">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-blue-600">Time Blocking Hector</h1>
+        <h1 className="text-2xl font-bold text-foreground">Time Blocking Hector</h1>
         <button
           onClick={toggleDarkMode}
-          className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          className="p-2 rounded-full hover:bg-muted transition-colors" // Usar bg-muted para hover
           aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
         >
           {darkMode ? (
-            <Sun className="text-gray-900 dark:text-gray-100" size={20} />
+            <Sun className="text-foreground" size={20} /> // Usar text-foreground para el icono
           ) : (
-            <Moon className="text-gray-900 dark:text-gray-100" size={20} />
+            <Moon className="text-foreground" size={20} /> // Usar text-foreground para el icono
           )}
         </button>
       </div>
